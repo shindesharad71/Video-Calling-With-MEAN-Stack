@@ -30,5 +30,5 @@
 
 <section class="online-users" *ngIf="onlineUsers?.length">
   <p>Online Users</p>
-  <p>{{ onlineUsers | json }}</p>
+  <button *ngFor="let user of onlineUsers" (click)="callUser(user)">{{ user }}</button>
 </section>

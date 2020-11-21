@@ -95,4 +95,12 @@ export class AppComponent implements AfterViewInit {
       console.log(`Hey - ${data}`);
     });
   }
+
+  callUser(userId): void {
+    this.socket.emit('callUser', {
+      signal: 'Add Signal',
+      from: this.myId,
+      userToCall: userId
+    });
+  }
 }
