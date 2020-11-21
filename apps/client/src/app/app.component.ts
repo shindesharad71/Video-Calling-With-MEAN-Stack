@@ -26,14 +26,17 @@ export class AppComponent implements AfterViewInit {
   myId: string;
   callerInfo: any;
 
+  isAudioEnabled = false;
+  isVideoEnabled = true;
+
   ngAfterViewInit(): void {
     this.videoElement = this.videoRef.nativeElement;
     this.partnerVideoElement = this.partnerVideoRef.nativeElement;
-    this.startUserMedia({ audio: false, video: true });
+    this.startUserMedia();
     this.initSocket();
   }
 
-  startUserMedia(config: any): void {
+  startUserMedia(): void {
     const n = <any>navigator;
     n.getUserMedia =
       n.getUserMedia ||
@@ -42,7 +45,7 @@ export class AppComponent implements AfterViewInit {
       n.msGetUserMedia;
 
     n.getUserMedia(
-      config,
+      { video: this.isVideoEnabled, audio: this.isAudioEnabled },
       (stream) => {
         this.myStream = stream;
         this.videoRef.nativeElement.srcObject = this.myStream;
@@ -54,25 +57,18 @@ export class AppComponent implements AfterViewInit {
     );
   }
 
-  start() {
-    this.startUserMedia({ video: true, audio: false });
+  toggleAudio(): void {
+    this.isAudioEnabled = !this.isAudioEnabled
+    this.startUserMedia();
   }
 
-  pause() {
-    this.startUserMedia({ video: false, audio: true });
+  toggleVideo(): void {
+    this.isVideoEnabled = !this.isVideoEnabled;
+    this.startUserMedia();
   }
 
-  toggleControls() {
-    this.videoElement.controls = this.displayControls;
-    this.displayControls = !this.displayControls;
-  }
+  endCall(): void {
 
-  resume() {
-    this.startUserMedia({ video: true, audio: true });
-  }
-
-  sound() {
-    this.startUserMedia({ video: true, audio: true });
   }
 
   initSocket(): void {
@@ -137,6 +133,7 @@ export class AppComponent implements AfterViewInit {
 
     peer.on('stream', (stream) => {
       this.partnerVideoRef.nativeElement.srcObject = stream;
+      this.callerStream = stream;
     });
 
     this.socket.on('callAccepted', (signal) => {
@@ -151,7 +148,7 @@ export class AppComponent implements AfterViewInit {
     const peer = new Peer({
       initiator: false,
       trickle: false,
-      stream: this.myStream
+      stream: this.myStream,
     });
 
     peer.on('signal', (data) => {
@@ -160,6 +157,7 @@ export class AppComponent implements AfterViewInit {
 
     peer.on('stream', (stream) => {
       this.partnerVideoRef.nativeElement.srcObject = stream;
+      this.callerStream = stream;
     });
 
     peer.signal(this.callerStream);

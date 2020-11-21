@@ -26,16 +26,11 @@
       </div>
     </div>
 
-    <!-- <button (click)="toggleControls()" class="btn btn-success">
-      Toggle Controls
-    </button>
-
-    <div class="media-controls" *ngIf="displayControls">
-      <button (click)="start()" class="btn btn-primary">Play</button>
-      <button (click)="pause()" class="btn btn-warning">Disable Camera</button>
-      <button (click)="resume()" class="btn btn-info">Resume</button>
-      <button (click)="sound()" class="btn btn-danger">Play with Sound</button>
-    </div> -->
+    <div class="media-controls">
+      <button (click)="toggleAudio()" class="btn btn-primary">Audio</button>
+      <button (click)="toggleVideo()" class="btn btn-warning">Video</button>
+      <button (click)="endCall()" class="btn btn-warning">End Call</button>
+    </div>
   </div>
 </section>
 
