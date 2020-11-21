@@ -12,8 +12,18 @@
 <section id="user-media" *ngIf="isStreamAvailable">
   <div class="container">
     <div id="videos">
-      <video id="my-video" #videoRef></video>
-      <video id="partner-video" #partnerVideoRef autoplay></video>
+      <div>
+        <video id="my-video" #videoRef autoplay></video>
+        <div class="overlayText">
+          <p id="topText">Me</p>
+        </div>
+      </div>
+      <div>
+        <video id="partner-video" #partnerVideoRef autoplay></video>
+        <div class="overlayText">
+          <p id="topText">Caller</p>
+        </div>
+      </div>
     </div>
 
     <button (click)="toggleControls()" class="btn btn-success">
@@ -22,7 +32,7 @@
 
     <div class="media-controls" *ngIf="displayControls">
       <button (click)="start()" class="btn btn-primary">Play</button>
-      <button (click)="pause()" class="btn btn-warning">Pause</button>
+      <button (click)="pause()" class="btn btn-warning">Disable Camera</button>
       <button (click)="resume()" class="btn btn-info">Resume</button>
       <button (click)="sound()" class="btn btn-danger">Play with Sound</button>
     </div>

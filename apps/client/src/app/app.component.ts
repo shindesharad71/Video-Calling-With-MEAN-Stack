@@ -41,11 +41,8 @@ export class AppComponent implements AfterViewInit {
     n.getUserMedia(
       config,
       (stream) => {
-        this.videoRef.nativeElement.srcObject = stream;
-
         this.myStream = stream;
-        this.videoRef.nativeElement.play();
-        this.partnerVideoRef.nativeElement.play();
+        this.videoRef.nativeElement.srcObject = this.myStream;
       },
       (err) => {
         this.isStreamAvailable = false;
@@ -59,7 +56,7 @@ export class AppComponent implements AfterViewInit {
   }
 
   pause() {
-    this.videoElement.pause();
+    this.startUserMedia({ video: false, audio: true });
   }
 
   toggleControls() {
@@ -68,7 +65,7 @@ export class AppComponent implements AfterViewInit {
   }
 
   resume() {
-    this.videoElement.play();
+    this.startUserMedia({ video: true, audio: true });
   }
 
   sound() {
