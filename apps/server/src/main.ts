@@ -12,7 +12,7 @@ const server = app.listen(port, () => {
 });
 
 // Create Socket IO
-const io = require('socket.io')(server);
+const io = require('socket.io')(server, { origins: '*:*' });
 
 const users = {};
 
@@ -20,10 +20,6 @@ io.on('connection', (socket) => {
   if (!users[socket.id]) {
     users[socket.id] = socket.id;
   }
-
-  console.log(socket);
-
-
   socket.emit('yourID', socket.id);
   io.sockets.emit('allUsers', users);
   socket.on('disconnect', () => {
