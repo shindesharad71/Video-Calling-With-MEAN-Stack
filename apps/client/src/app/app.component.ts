@@ -145,7 +145,7 @@ export class AppComponent implements AfterViewInit {
   }
 
   acceptCall(): void {
-    // setCallAccepted(true);
+    this.incomingCall = false;
     const peer = new Peer({
       initiator: false,
       trickle: false,
