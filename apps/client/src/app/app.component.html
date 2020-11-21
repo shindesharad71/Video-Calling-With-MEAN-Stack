@@ -6,7 +6,10 @@
 
 <section id="user-media">
   <div class="container">
-    <video id="my-video" #videoRef></video>
+    <div id="videos">
+      <video id="my-video" #videoRef></video>
+      <video id="partner-video" #partnerVideoRef></video>
+    </div>
 
     <button (click)="toggleControls()" class="btn btn-success">
       Toggle Controls

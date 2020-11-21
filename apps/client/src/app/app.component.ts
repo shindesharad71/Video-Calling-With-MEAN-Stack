@@ -7,12 +7,15 @@ import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 })
 export class AppComponent implements AfterViewInit {
   @ViewChild('videoRef') videoRef: ElementRef;
+  @ViewChild('partnerVideoRef') partnerVideoRef: ElementRef;
   videoElement: any;
+  partnerVideoElement: any;
   isPlaying = false;
   displayControls = true;
 
   ngAfterViewInit(): void {
     this.videoElement = this.videoRef.nativeElement;
+    this.partnerVideoElement = this.partnerVideoRef.nativeElement;
     this.startUserMedia({ audio: false, video: true });
   }
 
@@ -28,7 +31,9 @@ export class AppComponent implements AfterViewInit {
       config,
       (stream) => {
         this.videoRef.nativeElement.srcObject = stream;
+        this.partnerVideoRef.nativeElement.srcObject = stream;
         this.videoRef.nativeElement.play();
+        this.partnerVideoRef.nativeElement.play();
       },
       (err) => console.error(err)
     );
