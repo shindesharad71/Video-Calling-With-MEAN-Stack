@@ -1,4 +1,4 @@
-# P2P Calling With MEAN Stack
+# P2P Video Calling With MEAN Stack
 
 A Basic Video P2P Video Calling Implemented Using Angular, Node and Express Js With the Help of Socket and WebRTC.
 
