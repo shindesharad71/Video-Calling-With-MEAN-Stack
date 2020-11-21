@@ -28,12 +28,41 @@ video {
   height: auto;
 }
 
+.media-controls {
+  text-align: center;
+  margin-top: 16px;
+  button {
+    margin-right: 16px;
+  }
+}
+
+.online-users {
+  text-align: center;
+  margin-top: 16px;
+  button {
+    margin-right: 16px;
+  }
+}
+
 .overlayText {
   position: absolute;
   bottom: 30%;
-  left: 23%;
+  left: 15%;
   z-index: 1;
   text-shadow: 1px;
+
+  .right {
+    left: 0%;
+    right: 15%;
+  }
+}
+
+.overlayText-right {
+  position: absolute;
+  bottom: 30%;
+  z-index: 1;
+  text-shadow: 1px;
+  right: 15%;
 }
 
 #topText {
@@ -52,6 +81,7 @@ video {
   padding: 4px;
   justify-content: center;
   bottom: 28%;
+  z-index: 2;
   div {
     display: inline;
   }

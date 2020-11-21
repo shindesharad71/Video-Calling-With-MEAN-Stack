@@ -20,6 +20,7 @@ export class AppComponent implements AfterViewInit {
   isStreamAvailable = true;
   incomingCall = false;
   isCallAccepted = false;
+  isCallInProgress = false;
 
   onlineUsers = [];
   socket: any;
@@ -108,6 +109,7 @@ export class AppComponent implements AfterViewInit {
   }
 
   callUser(userId): void {
+    this.isCallInProgress = true;
     const peer = new Peer({
       initiator: true,
       trickle: false,
@@ -150,6 +152,7 @@ export class AppComponent implements AfterViewInit {
 
   acceptCall(): void {
     this.incomingCall = false;
+    this.isCallInProgress = true;
     const peer = new Peer({
       initiator: false,
       trickle: false,

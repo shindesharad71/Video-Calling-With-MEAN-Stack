@@ -9,12 +9,15 @@
     <div id="videos">
       <div>
         <video id="my-video" #videoRef autoplay></video>
-        <div class="overlayText">
-          <p id="topText">Me</p>
+        <div class="overlayText" *ngIf="myId">
+          <p id="topText">Me - {{ myId }}</p>
         </div>
       </div>
       <div>
         <video id="partner-video" #partnerVideoRef autoplay></video>
+        <div class="overlayText-right" *ngIf="callerInfo">
+          <p id="topText">Caller - {{ callerInfo }}</p>
+        </div>
       </div>
     </div>
 
@@ -30,7 +33,10 @@
   <h1>Something went wrong, please refresh the page.</h1>
 </section>
 
-<section class="online-users" *ngIf="onlineUsers?.length && !incomingCall">
+<section
+  class="online-users"
+  *ngIf="onlineUsers?.length && !incomingCall && !isCallInProgress"
+>
   <p>Online Users</p>
   <button *ngFor="let user of onlineUsers" (click)="callUser(user)">
     Call {{ user }}
