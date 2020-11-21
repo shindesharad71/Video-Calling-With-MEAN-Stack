@@ -7,5 +7,12 @@
 <section id="user-media">
   <div class="container">
     <video id="my-video" #videoRef></video>
+    <button (click)="start()" class="btn btn-primary">Play</button>
+    <button (click)="toggleControls()" class="btn btn-success">
+      Toggle Controls
+    </button>
+    <button (click)="pause()" class="btn btn-warning">Pause</button>
+    <button (click)="resume()" class="btn btn-info">Resume</button>
+    <button (click)="sound()" class="btn btn-danger">Play with Sound</button>
   </div>
 </section>
