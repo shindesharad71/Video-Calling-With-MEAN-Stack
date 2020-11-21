@@ -7,7 +7,7 @@ WebRTC is a free, open-source project that provides web browsers and mobile appl
 This project was generated using [Nx](https://nx.dev).
 
 ## Demo
-![Demo](demo.gif)
+![Demo](demo.mp4)
 
 ## Installation and Setup Instructions
 
