@@ -1,5 +1,5 @@
 #header {
-  height: 60px;
+  height: 70px;
   background-color: #008073;
   color: white;
   margin-bottom: 16px;
@@ -28,15 +28,16 @@ video {
   height: auto;
 }
 
-#overlayText {
+.overlayText {
   position: absolute;
-  top: 30%;
-  left: 20%;
+  bottom: 30%;
+  left: 23%;
   z-index: 1;
+  text-shadow: 1px;
 }
 
 #topText {
-  color: black;
+  color: white;
   font-size: 20px;
   align-self: center;
 }
