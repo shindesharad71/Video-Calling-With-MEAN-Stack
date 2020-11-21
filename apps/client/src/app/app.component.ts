@@ -14,12 +14,14 @@ export class AppComponent implements AfterViewInit {
   isPlaying = false;
   displayControls = true;
   socket: any;
-  isStreamAvailable = false;
+  isStreamAvailable = true;
   onlineUsers = [];
   myId: string;
 
   ngAfterViewInit(): void {
-    // this.startUserMedia({ audio: false, video: true });
+    this.videoElement = this.videoRef.nativeElement;
+    this.partnerVideoElement = this.partnerVideoRef.nativeElement;
+    this.startUserMedia({ audio: false, video: true });
     this.initSocket();
   }
 
@@ -34,16 +36,15 @@ export class AppComponent implements AfterViewInit {
     n.getUserMedia(
       config,
       (stream) => {
-        this.isStreamAvailable = true;
-        this.videoElement = this.videoRef.nativeElement;
-        this.partnerVideoElement = this.partnerVideoRef.nativeElement;
-
         this.videoRef.nativeElement.srcObject = stream;
         this.partnerVideoRef.nativeElement.srcObject = stream;
         this.videoRef.nativeElement.play();
         this.partnerVideoRef.nativeElement.play();
       },
-      (err) => console.error(err)
+      (err) => {
+        this.isStreamAvailable = false;
+        console.error(err);
+      }
     );
   }
 
@@ -81,12 +82,15 @@ export class AppComponent implements AfterViewInit {
       const usersArray = [];
       console.log(`All Users - ${JSON.stringify(this.onlineUsers)}`);
       for (const user in users) {
-        if (Object.prototype.hasOwnProperty.call(users, user) && user !== this.myId) {
+        if (
+          Object.prototype.hasOwnProperty.call(users, user) &&
+          user !== this.myId
+        ) {
           const element = users[user];
           usersArray.push(element);
         }
       }
-      if(usersArray.length) {
+      if (usersArray.length) {
         this.onlineUsers = [].concat(usersArray);
       }
     });
@@ -100,7 +104,7 @@ export class AppComponent implements AfterViewInit {
     this.socket.emit('callUser', {
       signal: 'Add Signal',
       from: this.myId,
-      userToCall: userId
+      userToCall: userId,
     });
   }
 }

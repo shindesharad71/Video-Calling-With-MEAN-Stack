@@ -41,8 +41,6 @@ io.on('connection', (socket) => {
       signal: data.signalData,
       from: data.from,
     });
-    console.log(data);
-
   });
 
   socket.on('acceptCall', (data) => {
