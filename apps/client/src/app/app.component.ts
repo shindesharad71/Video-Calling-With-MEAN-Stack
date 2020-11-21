@@ -21,7 +21,7 @@ export class AppComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.videoElement = this.videoRef.nativeElement;
     this.partnerVideoElement = this.partnerVideoRef.nativeElement;
-    this.startUserMedia({ audio: false, video: true });
+    // this.startUserMedia({ audio: false, video: true });
     this.initSocket();
   }
 
