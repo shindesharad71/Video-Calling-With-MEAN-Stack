@@ -76,6 +76,7 @@ export class AppComponent implements AfterViewInit {
       console.log(`My Id - ${id}`);
       this.myId = id;
     });
+
     socketInstance.on('allUsers', (users) => {
       const usersArray = [];
       console.log(`All Users - ${JSON.stringify(this.onlineUsers)}`);
