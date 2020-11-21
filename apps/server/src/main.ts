@@ -15,7 +15,7 @@ const server = app.listen(port, () => {
 
 const socketOptions = {
   cors: true,
-  origins: ['http://127.0.0.1:4200']
+  origin: '*'
 };
 
 // Create Socket IO
