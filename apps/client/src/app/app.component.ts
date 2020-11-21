@@ -19,6 +19,9 @@ export class AppComponent implements AfterViewInit {
   onlineUsers = [];
   myId: string;
   myStream: any;
+  callerInfo: any;
+  incomingCall = false;
+  callerStream: any;
 
   ngAfterViewInit(): void {
     this.videoElement = this.videoRef.nativeElement;
@@ -99,7 +102,9 @@ export class AppComponent implements AfterViewInit {
     });
 
     socketInstance.on('hey', (data) => {
-      console.log(`Hey - ${data}`);
+      this.incomingCall = true;
+      this.callerInfo = data.from;
+      this.callerStream = data.signal;
     });
   }
 
@@ -140,5 +145,24 @@ export class AppComponent implements AfterViewInit {
       // setCallAccepted(true);
       peer.signal(signal);
     });
+  }
+
+  acceptCall(): void {
+    // setCallAccepted(true);
+    const peer = new Peer({
+      initiator: false,
+      trickle: false,
+      stream: this.myStream
+    });
+
+    peer.on('signal', (data) => {
+      this.socket.emit('acceptCall', { signal: data, to: this.callerInfo });
+    });
+
+    peer.on('stream', (stream) => {
+      this.partnerVideoRef.nativeElement.srcObject = stream;
+    });
+
+    peer.signal(this.callerStream);
   }
 }
