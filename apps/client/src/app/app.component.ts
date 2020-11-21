@@ -12,17 +12,19 @@ export class AppComponent implements AfterViewInit {
   @ViewChild('partnerVideoRef') partnerVideoRef: ElementRef;
   videoElement: any;
   partnerVideoElement: any;
+  myStream: any;
+  callerStream: any;
+
   isPlaying = false;
   displayControls = true;
-  socket: any;
   isStreamAvailable = true;
-  onlineUsers = [];
-  myId: string;
-  myStream: any;
-  callerInfo: any;
   incomingCall = false;
-  callerStream: any;
   isCallAccepted = false;
+
+  onlineUsers = [];
+  socket: any;
+  myId: string;
+  callerInfo: any;
 
   ngAfterViewInit(): void {
     this.videoElement = this.videoRef.nativeElement;
