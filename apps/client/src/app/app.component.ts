@@ -43,9 +43,14 @@ export class AppComponent implements AfterViewInit {
       n.webkitGetUserMedia ||
       n.mozGetUserMedia ||
       n.msGetUserMedia;
-
     n.getUserMedia(
-      { video: this.isVideoEnabled, audio: this.isAudioEnabled },
+      {
+        video: {
+          width: { min: 1024, ideal: 1280, max: 1920 },
+          height: { min: 576, ideal: 720, max: 1080 },
+        },
+        audio: this.isAudioEnabled,
+      },
       (stream) => {
         this.myStream = stream;
         this.videoRef.nativeElement.srcObject = this.myStream;
@@ -58,7 +63,7 @@ export class AppComponent implements AfterViewInit {
   }
 
   toggleAudio(): void {
-    this.isAudioEnabled = !this.isAudioEnabled
+    this.isAudioEnabled = !this.isAudioEnabled;
     this.startUserMedia();
   }
 
@@ -67,9 +72,7 @@ export class AppComponent implements AfterViewInit {
     this.startUserMedia();
   }
 
-  endCall(): void {
-
-  }
+  endCall(): void {}
 
   initSocket(): void {
     const socketInstance = socket.io('http://localhost:3000');
