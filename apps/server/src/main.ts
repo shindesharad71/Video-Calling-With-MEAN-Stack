@@ -17,11 +17,16 @@ const io = require('socket.io')(server, { origins: '*:*' });
 const users = {};
 
 io.on('connection', (socket) => {
+  console.log('\nSocket ID - ', socket.id);
+
   if (!users[socket.id]) {
     users[socket.id] = socket.id;
   }
+
   socket.emit('yourID', socket.id);
+
   io.sockets.emit('allUsers', users);
+
   socket.on('disconnect', () => {
     delete users[socket.id];
   });
