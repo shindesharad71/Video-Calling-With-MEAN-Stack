@@ -103,7 +103,6 @@ export class AppComponent implements AfterViewInit {
     socketInstance.on('hey', (data) => {
       this.incomingCall = true;
       this.callerInfo = data.from;
-      // this.callerStream = data.signal;
       this.callerSignal = data.signal;
     });
   }
