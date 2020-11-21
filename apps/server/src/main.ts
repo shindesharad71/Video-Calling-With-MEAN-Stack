@@ -3,12 +3,12 @@ import * as express from 'express';
 const app = express();
 const port = process.env.port || 3000;
 
-app.get('/', (req, res) => {
-  res.send({ message: 'Welcome to server!' });
-});
+// app.get('/', (req, res) => {
+//   res.send({ message: 'Welcome to server!' });
+// });
 
 const server = app.listen(port, () => {
-  console.log(`Listening at http://localhost:${port}/api`);
+  console.log(`Listening at http://localhost:${port}/`);
 });
 
 // Create Socket IO
