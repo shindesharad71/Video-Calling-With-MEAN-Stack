@@ -1,18 +1,25 @@
 import * as express from 'express';
+import * as cors from 'cors';
 
 const app = express();
+app.use(cors());
 const port = process.env.port || 3000;
 
-// app.get('/', (req, res) => {
-//   res.send({ message: 'Welcome to server!' });
-// });
+app.get('/', (req, res) => {
+  res.send({ message: 'Welcome to server!' });
+});
 
 const server = app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}/`);
 });
 
+const socketOptions = {
+  cors: true,
+  origins: ['http://127.0.0.1:4200']
+};
+
 // Create Socket IO
-const io = require('socket.io')(server, { origins: '*:*' });
+const io = require('socket.io')(server, socketOptions);
 
 const users = {};
 
@@ -23,7 +30,7 @@ io.on('connection', (socket) => {
     users[socket.id] = socket.id;
   }
 
-  socket.emit('yourID', socket.id);
+  socket.emit('myId', socket.id);
 
   io.sockets.emit('allUsers', users);
 
