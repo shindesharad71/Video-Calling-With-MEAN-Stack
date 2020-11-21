@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import * as socket from 'socket.io-client';
+import Peer from 'simple-peer';
 
 @Component({
   selector: 'sharad-root',
@@ -17,11 +18,12 @@ export class AppComponent implements AfterViewInit {
   isStreamAvailable = true;
   onlineUsers = [];
   myId: string;
+  myStream: any;
 
   ngAfterViewInit(): void {
     this.videoElement = this.videoRef.nativeElement;
     this.partnerVideoElement = this.partnerVideoRef.nativeElement;
-    // this.startUserMedia({ audio: false, video: true });
+    this.startUserMedia({ audio: false, video: true });
     this.initSocket();
   }
 
@@ -37,7 +39,8 @@ export class AppComponent implements AfterViewInit {
       config,
       (stream) => {
         this.videoRef.nativeElement.srcObject = stream;
-        this.partnerVideoRef.nativeElement.srcObject = stream;
+
+        this.myStream = stream;
         this.videoRef.nativeElement.play();
         this.partnerVideoRef.nativeElement.play();
       },
@@ -101,10 +104,41 @@ export class AppComponent implements AfterViewInit {
   }
 
   callUser(userId): void {
-    this.socket.emit('callUser', {
-      signal: 'Add Signal',
-      from: this.myId,
-      userToCall: userId,
+    const peer = new Peer({
+      initiator: true,
+      trickle: false,
+      config: {
+        iceServers: [
+          {
+            urls: 'stun:numb.viagenie.ca',
+            username: 'sultan1640@gmail.com',
+            credential: '98376683',
+          },
+          {
+            urls: 'turn:numb.viagenie.ca',
+            username: 'sultan1640@gmail.com',
+            credential: '98376683',
+          },
+        ],
+      },
+      stream: this.myStream,
+    });
+
+    peer.on('signal', (data) => {
+      this.socket.emit('callUser', {
+        signalData: data,
+        from: this.myId,
+        userToCall: userId,
+      });
+    });
+
+    peer.on('stream', (stream) => {
+      this.partnerVideoRef.nativeElement.srcObject = stream;
+    });
+
+    this.socket.on('callAccepted', (signal) => {
+      // setCallAccepted(true);
+      peer.signal(signal);
     });
   }
 }
