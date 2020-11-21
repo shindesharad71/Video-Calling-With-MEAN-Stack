@@ -40,3 +40,18 @@ video {
   font-size: 20px;
   align-self: center;
 }
+
+#incoming-call-notification {
+  position: absolute;
+  background-color: lightgreen;
+  color: black;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  padding: 4px;
+  justify-content: center;
+  bottom: 28%;
+  div {
+    display: inline;
+  }
+}

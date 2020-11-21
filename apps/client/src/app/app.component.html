@@ -36,11 +36,13 @@
 <section class="online-users" *ngIf="onlineUsers?.length && !incomingCall">
   <p>Online Users</p>
   <button *ngFor="let user of onlineUsers" (click)="callUser(user)">
-    {{ user }}
+    Call {{ user }}
   </button>
 </section>
 
-<section *ngIf="incomingCall">
-  <p>New Incoming call from {{ callerInfo }}</p>
-  <button (click)="acceptCall()">Accept Call</button>
+<section id="incoming-call-notification" *ngIf="incomingCall">
+  <div>
+    <p>New Incoming call from {{ callerInfo }}</p>
+    <button (click)="acceptCall()">Accept Call</button>
+  </div>
 </section>
