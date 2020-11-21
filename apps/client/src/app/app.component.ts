@@ -22,6 +22,7 @@ export class AppComponent implements AfterViewInit {
   callerInfo: any;
   incomingCall = false;
   callerStream: any;
+  isCallAccepted = false;
 
   ngAfterViewInit(): void {
     this.videoElement = this.videoRef.nativeElement;
@@ -77,13 +78,11 @@ export class AppComponent implements AfterViewInit {
     this.socket = socketInstance;
 
     socketInstance.on('myId', (id) => {
-      console.log(`My Id - ${id}`);
       this.myId = id;
     });
 
     socketInstance.on('allUsers', (users) => {
       const usersArray = [];
-      console.log(`All Users - ${JSON.stringify(this.onlineUsers)}`);
       for (const user in users) {
         if (
           Object.prototype.hasOwnProperty.call(users, user) &&
@@ -139,7 +138,8 @@ export class AppComponent implements AfterViewInit {
     });
 
     this.socket.on('callAccepted', (signal) => {
-      // setCallAccepted(true);
+      this.incomingCall = false;
+      this.isCallAccepted = true;
       peer.signal(signal);
     });
   }
