@@ -28,6 +28,7 @@
   <h1>Something went wrong, please refresh the page.</h1>
 </section>
 
-<section class="online-users">
+<section class="online-users" *ngIf="onlineUsers?.length">
+  <p>Online Users</p>
   <p>{{ onlineUsers | json }}</p>
 </section>

@@ -24,8 +24,6 @@ const io = require('socket.io')(server, socketOptions);
 const users = {};
 
 io.on('connection', (socket) => {
-  console.log('\nSocket ID - ', socket.id);
-
   if (!users[socket.id]) {
     users[socket.id] = socket.id;
   }

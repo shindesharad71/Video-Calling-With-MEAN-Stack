@@ -16,6 +16,7 @@ export class AppComponent implements AfterViewInit {
   socket: any;
   isStreamAvailable = false;
   onlineUsers = [];
+  myId: string;
 
   ngAfterViewInit(): void {
     // this.startUserMedia({ audio: false, video: true });
@@ -73,12 +74,13 @@ export class AppComponent implements AfterViewInit {
 
     socketInstance.on('myId', (id) => {
       console.log(`My Id - ${id}`);
+      this.myId = id;
     });
     socketInstance.on('allUsers', (users) => {
       const usersArray = [];
       console.log(`All Users - ${JSON.stringify(this.onlineUsers)}`);
       for (const user in users) {
-        if (Object.prototype.hasOwnProperty.call(users, user)) {
+        if (Object.prototype.hasOwnProperty.call(users, user) && user !== this.myId) {
           const element = users[user];
           usersArray.push(element);
         }
