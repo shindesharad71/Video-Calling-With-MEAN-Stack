@@ -4,7 +4,7 @@
   </div>
 </section>
 
-<section id="user-media">
+<section id="user-media" *ngIf="isStreamAvailable">
   <div class="container">
     <div id="videos">
       <video id="my-video" #videoRef></video>
@@ -22,4 +22,8 @@
       <button (click)="sound()" class="btn btn-danger">Play with Sound</button>
     </div>
   </div>
+</section>
+
+<section>
+  <h1>Something went wrong, please refresh the page.</h1>
 </section>

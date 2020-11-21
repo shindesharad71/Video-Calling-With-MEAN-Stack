@@ -14,11 +14,12 @@ export class AppComponent implements AfterViewInit {
   isPlaying = false;
   displayControls = true;
   socket: any;
+  isStreamAvailable = false;
 
   ngAfterViewInit(): void {
     this.videoElement = this.videoRef.nativeElement;
     this.partnerVideoElement = this.partnerVideoRef.nativeElement;
-    this.startUserMedia({ audio: false, video: true });
+    // this.startUserMedia({ audio: false, video: true });
     this.initSocket();
   }
 
@@ -33,6 +34,7 @@ export class AppComponent implements AfterViewInit {
     n.getUserMedia(
       config,
       (stream) => {
+        this.isStreamAvailable = true;
         this.videoRef.nativeElement.srcObject = stream;
         this.partnerVideoRef.nativeElement.srcObject = stream;
         this.videoRef.nativeElement.play();
