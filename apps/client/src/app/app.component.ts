@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import * as socket from 'socket.io-client';
 
 @Component({
   selector: 'sharad-root',
@@ -12,11 +13,13 @@ export class AppComponent implements AfterViewInit {
   partnerVideoElement: any;
   isPlaying = false;
   displayControls = true;
+  socket: any;
 
   ngAfterViewInit(): void {
     this.videoElement = this.videoRef.nativeElement;
     this.partnerVideoElement = this.partnerVideoRef.nativeElement;
     this.startUserMedia({ audio: false, video: true });
+    this.initSocket();
   }
 
   startUserMedia(config: any): void {
@@ -58,5 +61,22 @@ export class AppComponent implements AfterViewInit {
 
   sound() {
     this.startUserMedia({ video: true, audio: true });
+  }
+
+  initSocket(): void {
+    const socketInstance = socket.io('http://localhost:3000/');
+    this.socket = socketInstance;
+
+    socketInstance.on('yourID', (id) => {
+      console.log(id);
+
+    });
+    socketInstance.on('allUsers', (users) => {
+      console.log(users);
+    });
+
+    socketInstance.on('hey', (data) => {
+      console.log(data);
+    });
   }
 }
