@@ -4,11 +4,6 @@
   </div>
 </section>
 
-<section *ngIf="incomingCall">
-  <p>New Incoming call from {{ callerInfo }}</p>
-  <button (click)="acceptCall()">Accept Call</button>
-</section>
-
 <section id="user-media" *ngIf="isStreamAvailable">
   <div class="container">
     <div id="videos">
@@ -38,9 +33,14 @@
   <h1>Something went wrong, please refresh the page.</h1>
 </section>
 
-<section class="online-users" *ngIf="onlineUsers?.length">
+<section class="online-users" *ngIf="onlineUsers?.length && !incomingCall">
   <p>Online Users</p>
   <button *ngFor="let user of onlineUsers" (click)="callUser(user)">
     {{ user }}
   </button>
+</section>
+
+<section *ngIf="incomingCall">
+  <p>New Incoming call from {{ callerInfo }}</p>
+  <button (click)="acceptCall()">Accept Call</button>
 </section>

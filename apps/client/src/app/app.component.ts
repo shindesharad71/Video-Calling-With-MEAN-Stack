@@ -29,6 +29,8 @@ export class AppComponent implements AfterViewInit {
   isAudioEnabled = false;
   isVideoEnabled = true;
 
+  callerSignal: any;
+
   ngAfterViewInit(): void {
     this.videoElement = this.videoRef.nativeElement;
     this.partnerVideoElement = this.partnerVideoRef.nativeElement;
@@ -101,7 +103,8 @@ export class AppComponent implements AfterViewInit {
     socketInstance.on('hey', (data) => {
       this.incomingCall = true;
       this.callerInfo = data.from;
-      this.callerStream = data.signal;
+      // this.callerStream = data.signal;
+      this.callerSignal = data.signal;
     });
   }
 
@@ -163,6 +166,6 @@ export class AppComponent implements AfterViewInit {
       this.callerStream = stream;
     });
 
-    peer.signal(this.callerStream);
+  peer.signal(this.callerSignal);
   }
 }
