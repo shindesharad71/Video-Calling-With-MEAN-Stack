@@ -1,3 +1,9 @@
+button {
+  cursor: pointer;
+  outline: none;
+  border: 1px solid #ccc;
+}
+
 #header {
   height: 70px;
   background-color: #008073;
@@ -32,7 +38,21 @@ video {
   text-align: center;
   margin-top: 16px;
   button {
+    height: 60px;
+    width: 60px;
     margin-right: 16px;
+    font-size: 24px;
+    padding: 16px 16px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    background: #fff;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .active {
+    color: #fff;
+    background: #f44336;
   }
 }
 
