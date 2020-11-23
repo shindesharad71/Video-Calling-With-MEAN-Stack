@@ -107,8 +107,20 @@ export class AppComponent implements AfterViewInit {
       n.mozGetUserMedia ||
       n.msGetUserMedia;
     try {
-      this.myStream = await n.mediaDevices.getDisplayMedia(gdmOptions);
-      this.videoRef.nativeElement.srcObject = this.myStream;
+      if (this.isScreenSharingEnabled) {
+        const screenCaptureStream = await n.mediaDevices.getDisplayMedia(
+          gdmOptions
+        );
+        this.myStream = screenCaptureStream;
+        this.videoRef.nativeElement.srcObject = screenCaptureStream;
+
+        // Fires When Click on Stop Sharing
+        screenCaptureStream.oninactive = () => {
+          if (this.isVideoEnabled) {
+            this.startUserMedia();
+          }
+        };
+      }
     } catch (err) {
       console.error(err);
     }
