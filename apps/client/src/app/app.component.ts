@@ -27,6 +27,7 @@ export class AppComponent implements AfterViewInit {
   incomingCall = false;
   isCallAccepted = false;
   isCallInProgress = false;
+  isScreenSharingEnabled = false;
 
   onlineUsers = [];
   socket: any;
@@ -83,6 +84,34 @@ export class AppComponent implements AfterViewInit {
         console.error(err);
       }
     );
+  }
+
+  async initScreenCapture() {
+    this.isScreenSharingEnabled = !this.isScreenSharingEnabled;
+
+    const gdmOptions = {
+      video: {
+        cursor: 'always',
+      },
+      audio: {
+        echoCancellation: true,
+        noiseSuppression: true,
+        sampleRate: 44100,
+      },
+    };
+
+    const n = <any>navigator;
+    n.getUserMedia =
+      n.getUserMedia ||
+      n.webkitGetUserMedia ||
+      n.mozGetUserMedia ||
+      n.msGetUserMedia;
+    try {
+      this.myStream = await n.mediaDevices.getDisplayMedia(gdmOptions);
+      this.videoRef.nativeElement.srcObject = this.myStream;
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   toggleAudio(): void {

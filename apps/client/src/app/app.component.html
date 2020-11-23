@@ -28,7 +28,7 @@
       <button (click)="toggleVideo()" [ngClass]="{'active': isVideoEnabled}">
         <fa-icon [icon]="videoIcon"></fa-icon>
       </button>
-      <button (click)="endCall()" *ngIf="isCallInProgress" [ngClass]="{'active': isVideoEnabled}">
+      <button (click)="initScreenCapture()" [ngClass]="{'active': isScreenSharingEnabled}">
         <fa-icon [icon]="desktop"></fa-icon>
       </button>
       <button (click)="endCall()" class="active" *ngIf="isCallInProgress">
