@@ -22,16 +22,16 @@
     </div>
 
     <div class="media-controls">
-      <button (click)="toggleAudio()" class="btn btn-primary">
+      <button (click)="toggleAudio()" [ngClass]="{'active': isAudioEnabled}">
         <fa-icon [icon]="microphone"></fa-icon>
       </button>
-      <button (click)="toggleVideo()" class="btn btn-warning">
+      <button (click)="toggleVideo()" [ngClass]="{'active': isVideoEnabled}">
         <fa-icon [icon]="videoIcon"></fa-icon>
       </button>
-      <button (click)="endCall()" class="btn btn-warning">
+      <button (click)="endCall()" *ngIf="isCallInProgress" [ngClass]="{'active': isVideoEnabled}">
         <fa-icon [icon]="desktop"></fa-icon>
       </button>
-      <button (click)="endCall()" class="btn btn-warning">
+      <button (click)="endCall()" class="active" *ngIf="isCallInProgress">
         <fa-icon [icon]="endCallIcon"></fa-icon>
       </button>
     </div>

@@ -40,6 +40,13 @@ video {
     border: 1px solid #ccc;
     border-radius: 50%;
     background: #fff;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .active {
+    color: #fff;
+    background: #f44336;
   }
 }
 
