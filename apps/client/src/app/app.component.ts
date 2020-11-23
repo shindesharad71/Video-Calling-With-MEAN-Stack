@@ -1,7 +1,12 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import * as socket from 'socket.io-client';
 import Peer from 'simple-peer';
-import { faMicrophone, faVideo, faDesktop, faPhoneSlash } from '@fortawesome/free-solid-svg-icons';
+import {
+  faMicrophone,
+  faVideo,
+  faDesktop,
+  faPhoneSlash,
+} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'sharad-root',
@@ -33,6 +38,11 @@ export class AppComponent implements AfterViewInit {
 
   callerSignal: any;
 
+  VIDEO_CONFIG = {
+    width: { min: 1024, ideal: 1280, max: 1920 },
+    height: { min: 576, ideal: 720, max: 1080 },
+  };
+
   // Icons
   microphone = faMicrophone;
   videoIcon = faVideo;
@@ -46,7 +56,16 @@ export class AppComponent implements AfterViewInit {
     this.initSocket();
   }
 
-  startUserMedia(): void {
+  startUserMedia(config?: any): void {
+    let mediaConfig = {
+      video: this.VIDEO_CONFIG,
+      audio: this.isAudioEnabled,
+    };
+
+    if (config) {
+      mediaConfig = config;
+    }
+
     const n = <any>navigator;
     n.getUserMedia =
       n.getUserMedia ||
@@ -54,14 +73,8 @@ export class AppComponent implements AfterViewInit {
       n.mozGetUserMedia ||
       n.msGetUserMedia;
     n.getUserMedia(
-      {
-        video: {
-          width: { min: 1024, ideal: 1280, max: 1920 },
-          height: { min: 576, ideal: 720, max: 1080 },
-        },
-        audio: this.isAudioEnabled,
-      },
-      (stream) => {
+      mediaConfig,
+      (stream: MediaStream) => {
         this.myStream = stream;
         this.videoRef.nativeElement.srcObject = this.myStream;
       },
@@ -79,7 +92,14 @@ export class AppComponent implements AfterViewInit {
 
   toggleVideo(): void {
     this.isVideoEnabled = !this.isVideoEnabled;
-    this.startUserMedia();
+    if (this.isVideoEnabled) {
+      this.startUserMedia({
+        video: this.VIDEO_CONFIG,
+        audio: this.isAudioEnabled,
+      });
+    } else {
+      this.stopVideoOnly(this.myStream);
+    }
   }
 
   endCall(): void {}
@@ -176,5 +196,29 @@ export class AppComponent implements AfterViewInit {
     });
 
     peer.signal(this.callerSignal);
+  }
+
+  stopBothVideoAndAudio(stream) {
+    stream.getTracks().forEach(function (track) {
+      if (track.readyState === 'live') {
+        track.stop();
+      }
+    });
+  }
+
+  stopVideoOnly(stream) {
+    stream.getTracks().forEach(function (track) {
+      if (track.readyState === 'live' && track.kind === 'video') {
+        track.stop();
+      }
+    });
+  }
+
+  stopAudioOnly(stream) {
+    stream.getTracks().forEach(function (track) {
+      if (track.readyState === 'live' && track.kind === 'audio') {
+        track.stop();
+      }
+    });
   }
 }
