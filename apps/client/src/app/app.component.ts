@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import * as socket from 'socket.io-client';
 import Peer from 'simple-peer';
+import { faMicrophone, faVideo, faDesktop, faPhoneSlash } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'sharad-root',
@@ -31,6 +32,12 @@ export class AppComponent implements AfterViewInit {
   isVideoEnabled = true;
 
   callerSignal: any;
+
+  // Icons
+  microphone = faMicrophone;
+  videoIcon = faVideo;
+  desktop = faDesktop;
+  endCallIcon = faPhoneSlash;
 
   ngAfterViewInit(): void {
     this.videoElement = this.videoRef.nativeElement;
@@ -168,6 +175,6 @@ export class AppComponent implements AfterViewInit {
       this.callerStream = stream;
     });
 
-  peer.signal(this.callerSignal);
+    peer.signal(this.callerSignal);
   }
 }

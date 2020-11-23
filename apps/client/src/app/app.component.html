@@ -22,9 +22,18 @@
     </div>
 
     <div class="media-controls">
-      <button (click)="toggleAudio()" class="btn btn-primary">Audio</button>
-      <button (click)="toggleVideo()" class="btn btn-warning">Video</button>
-      <button (click)="endCall()" class="btn btn-warning">End Call</button>
+      <button (click)="toggleAudio()" class="btn btn-primary">
+        <fa-icon [icon]="microphone"></fa-icon>
+      </button>
+      <button (click)="toggleVideo()" class="btn btn-warning">
+        <fa-icon [icon]="videoIcon"></fa-icon>
+      </button>
+      <button (click)="endCall()" class="btn btn-warning">
+        <fa-icon [icon]="desktop"></fa-icon>
+      </button>
+      <button (click)="endCall()" class="btn btn-warning">
+        <fa-icon [icon]="endCallIcon"></fa-icon>
+      </button>
     </div>
   </div>
 </section>
