@@ -6,6 +6,7 @@ import {
   faVideo,
   faDesktop,
   faPhoneSlash,
+  faPhone
 } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -49,6 +50,7 @@ export class AppComponent implements AfterViewInit {
   videoIcon = faVideo;
   desktop = faDesktop;
   endCallIcon = faPhoneSlash;
+  callIcon = faPhone;
 
   ngAfterViewInit(): void {
     this.videoElement = this.videoRef.nativeElement;

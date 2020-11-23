@@ -48,7 +48,7 @@
 >
   <p>Online Users</p>
   <button *ngFor="let user of onlineUsers" (click)="callUser(user)">
-    Call {{ user }}
+    <fa-icon [icon]="callIcon"></fa-icon> Call {{ user }}
   </button>
 </section>
 
